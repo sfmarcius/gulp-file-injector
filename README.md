@@ -60,6 +60,7 @@ exports.default = build;
 ```
 
 This example will inject the contents of *"file1.js"* and *"file2.js"* into *"bundle.js"*:
+
 #### **`dest/bundle.js`**
 ```javascript
 function func1() {
@@ -71,6 +72,32 @@ function func2() {
 console.log(func1());
 console.log(func2());
 ```
+## Controlling file absence
+
+Every time the plugin identifies a injection-point, it tries to do the injection.
+
+By default, if said file doesn't exists, the plugin fails (throws exception).
+
+You can change this behavior by signaling what to do in case of file not found.
+
+Just right to the path, use a comma and the directive: `ifAbsent=[fail|keep|empty]`.
+
+#### **`src/bundle.js`**
+```javascript
+//! $file(src/file1.js, ifAbsent=keep)
+//! $file(src/file2.js, ifAbsent=empty)
+if (func1) {
+    console.log(func1());
+}
+if (func2) {
+    console.log(func2());
+}
+```
+
+* **fail**: is the default behavior.
+* **keep**: if the file is not found, the expression is kept as is on the output.
+* **empty**: if the file is not found, assume an empty file, thus removing the expression on the output.
+
 ## Options
 
 The default patterns recognized are:
