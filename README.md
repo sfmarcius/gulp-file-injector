@@ -73,6 +73,18 @@ console.log(func2());
 ```
 ## Options
 
+The default patterns recognized are:
+
+* `$file(path/to/file.ext)`
+* `//! $file(path/to/file.ext)`
+* `/*! $file(path/to/file.ext) */`
+* `<!--! $file(path/to/file.ext) -->;`
+* `<file path="path/to/file.ext" />;`
+* `//! <file path="path/to/file.ext" />;`
+* `/*! <file path="path/to/file.ext" />; */`
+* `<!--! <file path="path/to/file.ext" />; -->;`
+
+
 ### Replacing default patterns
 
 If you need or want to replace the default patterns with your own, just pass a plain
