@@ -119,8 +119,8 @@ class FileInjector {
                 delimiters: [
                     { type: "file", start: /\$file\(/, end: /\)/ },          // $file(...)
                     { type: "file", start: /\/\*!\s*\$file\(/, end: /\)\s*(\*\/)/ }, // /*! $file(...) */
-                    { type: "prop", start: /\$prop\(/, end: /\)/ },          // $file(...)
-                    { type: "prop", start: /\/\*!\s*\$prop\(/, end: /\)\s*(\*\/)/ }, // /*! $file(...) */
+                    //{ type: "prop", start: /\$prop\(/, end: /\)/ },          // $file(...)
+                    //{ type: "prop", start: /\/\*!\s*\$prop\(/, end: /\)\s*(\*\/)/ }, // /*! $file(...) */
                 ]
             },
             options);
@@ -221,6 +221,7 @@ class ExpressionMatcher {
         if (offset > 0) { contents = contents.substring(offset); }
         let found = [];
         this.delimiters.forEach(d => {
+            if (!d.type) d.type = "file";
             const startFound = execRegExp(d.start, contents);
             if (startFound) {
                 const iStr = startFound[0];
