@@ -8,7 +8,7 @@ Gulp plugin that injects file contents into another files (much like an include 
 
 First, install the plugin as a dev dependency:
 ```
-    npm install gulp-file-injector -D
+npm install gulp-file-injector -D
 ```
 
 Say you have these files:
