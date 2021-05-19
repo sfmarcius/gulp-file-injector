@@ -1,0 +1,4 @@
+$file(./test_01.txt)
+test_02() {
+    return "test_02";
+}

@@ -1,0 +1,40 @@
+{
+    "name": "@mfonseca/gulp-file-injector",
+    "version": "1.0.0-alpha.1",
+    "description": "Gulp plugin that injects file contents into another files (much like an include directive).",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://sf.marcius%40gmail.com@github.com/sfmarcius/gulp-file-injector.git"
+    },
+    "keywords": [
+        "file-inject",
+        "file-include"
+    ],
+    "author": "Marcius da Silva da Fonseca",
+    "license": "LGPL-2.1",
+    "devDependencies": {
+        "chai": "^4.3.4",
+        "chai-exclude": "^2.0.3",
+        "fs-extra": "^10.0.0",
+        "gulp-mocha": "^8.0.0",
+        "mocha": "^8.4.0"
+    },
+    "directories": {
+        "test": "test"
+    },
+    "dependencies": {
+        "gulp-util": "^3.0.8",
+        "source-map": "^0.7.3",
+        "through2": "^4.0.2",
+        "vinyl": "^2.2.1",
+        "vinyl-sourcemaps-apply": "^0.2.1"
+    },
+    "bugs": {
+        "url": "https://github.com/sfmarcius/gulp-file-injector/issues"
+    },
+    "homepage": "https://github.com/sfmarcius/gulp-file-injector#readme"
+}
