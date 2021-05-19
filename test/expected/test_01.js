@@ -1,3 +1,3 @@
-test_01() {
+function test_01() {
     return "test_01";
 }

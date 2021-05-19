@@ -1,4 +1,0 @@
-$file(./test_03.txt)
-test_04() {
-    return "test_04";
-}
