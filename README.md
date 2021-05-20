@@ -67,10 +67,14 @@ exports.default = gulp.series(clean, build);
 
 Assuming you have this on your `package.json`:
 ```javascript
+{
+    ...
     "scripts": {
         "build": "gulp",
-        // other stuff...
+        ...
     },
+    ...
+}
 ```
 
 Just run: `npm run-script build`.
