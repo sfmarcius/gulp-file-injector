@@ -1,6 +1,6 @@
 {
     "name": "@mfonseca/gulp-file-injector",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "description": "Gulp plugin that injects file contents into another files (much like an include directive).",
     "main": "src/index.js",
     "scripts": {

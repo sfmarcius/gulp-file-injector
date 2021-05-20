@@ -2,6 +2,9 @@
 
 ## CHANGELOG SO FAR...
 
+### *[20/05/2021] 1.0.0-alpha.2*
+* `[=] Readme enhancement`
+
 ### *[18/05/2021] 1.0.0-alpha.1*
 * `[+] Project start`
 
