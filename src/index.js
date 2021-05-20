@@ -222,22 +222,26 @@ class FileInjector {
                     srcNode.add(new SourceNode(linIdx, colIdx, relative, str));
                 }
                 if (found) {
-                    const subParsed = found.content.parsed;
-                    const subfile = Utils.readFile(subParsed.path, { pwd: $path.dirname($path.resolve(file.path)) });
-                    if (subfile) {
-                        this.__unfold(subfile, encoding, srcNode, subParsed);
-                    } else {
-                        const ifAbsent = subParsed.ifAbsent || "fail";
-                        switch (ifAbsent) {
-                            case "fail":
-                                throw new Error(`File "${subParsed.path}" not found (injection point: file: ${file.path}:${linIdx}:${colIdx})`);
-                            case "keep":
-                                srcNode.add(new SourceNode(linIdx, j, file.path, line.substring(j, found.endIndex)));
-                                break;
-                            case "empty":
-                                // dont add to the src
-                                break;
+                    if (found.type === "file") {
+                        const subParsed = found.content.parsed;
+                        const subfile = Utils.readFile(subParsed.path, { pwd: $path.dirname($path.resolve(file.path)) });
+                        if (subfile) {
+                            this.__unfold(subfile, encoding, srcNode, subParsed);
+                        } else {
+                            const ifAbsent = subParsed.ifAbsent || "fail";
+                            switch (ifAbsent) {
+                                case "fail":
+                                    throw new Error(`File "${subParsed.path}" not found (injection point: file: ${file.path}:${linIdx}:${colIdx})`);
+                                case "keep":
+                                    srcNode.add(new SourceNode(linIdx, j, file.path, line.substring(j, found.endIndex)));
+                                    break;
+                                case "empty":
+                                    // dont add to the src
+                                    break;
+                            }
                         }
+                    } else if (found.type === "prop") {
+                        // TODO : add prop injection here
                     }
                     j = found.endIndex;
                 }
@@ -273,6 +277,7 @@ class ExpressionMatcher {
                     const expr = contents.substring(i0, j1);
                     const content = contents.substring(i1, j0);
                     const match = {
+                        type: d.type,
                         startIndex: i0 + offset, // int : the index at wich the original expression starts
                         endIndex: j1 + offset, // int : the index at wich the original expression ends
                         rawString: expr, // string : the full original expression found, including delimiters
