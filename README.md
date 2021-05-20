@@ -8,7 +8,7 @@
 
 Gulp plugin that injects file contents into another files (much like an include directive).
 
-> **NOTE:** This plugin is Work in Progress!!!
+> **NOTE:** This plugin still as `Work in Progress`!!!
 
 # Usage
 
