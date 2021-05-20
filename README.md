@@ -121,9 +121,9 @@ The default patterns recognized are:
 ### Replacing default patterns
 
 If you need or want to replace the default patterns with your own, just pass a plain
-object to the plugin, containing the array of *delimiters* you need.
+object to the plugin, containing the array of *`delimiters`* you need.
 
-Each delimiter must have a *start* regex and a *end* regex. Anything between these
+Each delimiter must have a *`start`* regex and an *`end`* regex. Anything between these
 delimiters will be treated as the file path being included.
 
 ```javascript
@@ -143,7 +143,7 @@ delimiters will be treated as the file path being included.
 ### Adding extra patterns
 
 If you want to keep the default patterns and just add new ones, just pass a plain
-object to the plugin, containing the array of *extraDelimiters* you need.
+object to the plugin, containing the array of *`extraDelimiters`* you need.
 ```javascript
     ...
     .pipe(injectFiles(
@@ -157,6 +157,32 @@ object to the plugin, containing the array of *extraDelimiters* you need.
     ))
     ...
 ```
+
+> **NOTE: ** Keep in mind that the injection-point expression must be on a single line of code!
+
+#### **`this_works.js`**
+```javascript
+/*! $file( src/file1.js ) */
+console.log("this file injection works!");
+```
+
+#### **`this_works_too.js`**
+```javascript
+// inline injection
+function myObject() {
+    return /*! $file( src/myObject.json ) */;
+}
+console.log("this file injection works!");
+```
+
+#### **`this_doesnt_work.js`**
+```javascript
+/*! $file(
+    src/file1.js
+) */
+console.log("this file injection doesn't work!");
+```
+
 
 ## TODO
 
