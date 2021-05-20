@@ -2,12 +2,9 @@ const $fs = require("fs");
 const $path = require("path");
 const File = require("vinyl");
 const through2 = require("through2");
-const gutil = require("gulp-util");
-const SourceMap = require("source-map");
+const PluginError = require("plugin-error");
+const SourceNode = require("source-map").SourceNode;
 const applySourceMap = require("vinyl-sourcemaps-apply");
-
-const PluginError = gutil.PluginError;
-const SourceNode = SourceMap.SourceNode;
 
 const Utils = {
     isValued: (v) => v !== undefined && v !== null,
