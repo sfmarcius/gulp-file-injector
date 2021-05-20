@@ -1,3 +1,4 @@
+const logger = require("gulplog");
 const $fs = require("fs");
 const $path = require("path");
 const File = require("vinyl");
@@ -173,7 +174,6 @@ class FileInjector {
         try {
             if (!file.isNull()) {
                 if (!file.isBuffer()) {
-                    console.log("callback 1");
                     result = new PluginError(this.pluginName, "Only Buffer supported");
                 } else {
                     const root = new SourceNode();
