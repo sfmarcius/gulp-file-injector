@@ -62,8 +62,18 @@ const build = () => {
         .pipe(gulp.dest(`dist`));
 };
 
-exports.default = build;
+exports.default = gulp.series(clean, build);
 ```
+
+Assuming you have this on your `package.json`:
+```javascript
+    "scripts": {
+        "build": "gulp",
+        // other stuff...
+    },
+```
+
+Just run: `npm run-script build`.
 
 This example will inject the contents of *"file1.js"* and *"file2.js"* into *"bundle.js"*:
 
