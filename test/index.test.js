@@ -27,7 +27,7 @@ function doTest(targetFunction, targetArgs, testFilename, doneCallback) {
 }
 
 describe("gulp-file-injector", () => {
-    let filenames = [ "test_01.js", "test_02.js", "test_03.js", "test_04.js", "test_05.js", "test_06.js"];
+    let filenames = [ "test_01.js", "test_02.js", "test_03.js", "test_04.js", "test_05.js", "test_06.js", "test_07.js"];
 
     filenames.forEach(filename => {
         it(`inject fixtures/${filename}`, (doneCallback) => {

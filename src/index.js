@@ -203,7 +203,7 @@ class FileInjector {
         const relative = Utils.relativePath(file.path, options.cwd);
         let sourcecode = Utils.bufferToString(file.contents, encoding);
         if (!!(options.removeSourceMappingTag)) {
-            this.__removeSrcMapping(sourcecode);
+            sourcecode = this.__removeSrcMapping(sourcecode);
         }
         if (parsed && ("transform" in parsed)) {
             const transformName = parsed.transform;
@@ -259,11 +259,13 @@ class FileInjector {
         });
         return srcNode;
     }
+
     __removeSrcMapping(srccode) {
         let tmp = srccode;
         if (typeof tmp === "string" && tmp.length) {
             logger.debug("removeSrcMapping...");
-            const srcMappingTag = /(\/[*/][@#])\s+(sourceMappingURL)\s*\=\s*((?:(?!\s+\*\/).)*).*[\n\r]/g;
+            const srcMappingTag = /(\/[\*\/][@#])\s+(sourceMappingURL\s*\=\s*(?:(?!\s+\*\/).)*)(.*((\r)?\n)?)?/g;
+            //const srcMappingTag = /(\/[\*\/][@#])\s+(sourceMappingURL\s*\=\s*(?:(?!\s+\*\/).)*)(.*(\r?\n)?)?/g;
             tmp = tmp.replace(srcMappingTag, "");
         }
         return tmp;
