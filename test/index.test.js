@@ -20,13 +20,15 @@ function doTest(targetFunction, targetArgs, testFilename, doneCallback) {
     var stream = targetFunction.apply(null, targetArgs);
     check(stream, doneCallback, function (outputFile) {
         let actualContent = String(outputFile.contents);
-        expect(actualContent).to.equal(expectedContent);
+        // normalize newline chars, so the test can be consistent
+        // no matter the git-clone config
+        expect(actualContent.replace(/\r\n/g, "\n")).to.equal(expectedContent.replace(/\r\n/g, "\n"));
     });
 }
 
 describe("gulp-file-injector", () => {
     let filenames = [ "test_01.js", "test_02.js", "test_03.js", "test_04.js", "test_05.js", "test_06.js"];
-    
+
     filenames.forEach(filename => {
         it(`inject fixtures/${filename}`, (doneCallback) => {
             doTest(plugin, {}, filename, doneCallback);

@@ -153,8 +153,9 @@ class FileInjector {
                     start: /(<!--!\s+)(<file\s+path\s*=\s*['"])/i,
                     end: /(['"]\s*\/>)(\s*-->)/i
                 },
-            ]
-        }
+            ],
+            removeSourceMappingTag: true
+        };
     }
     constructor(options = {}) {
         this.options = Object.assign(FileInjector.defaultOptions, options);
@@ -201,15 +202,21 @@ class FileInjector {
         if (!file) return srcNode;
         const relative = Utils.relativePath(file.path, options.cwd);
         let sourcecode = Utils.bufferToString(file.contents, encoding);
-        srcNode.setSourceContent(relative, sourcecode);
-
+        if (!!(options.removeSourceMappingTag)) {
+            this.__removeSrcMapping(sourcecode);
+        }
         if (parsed && ("transform" in parsed)) {
             const transformName = parsed.transform;
             if (transformName in options.transforms) {
-                const tmp = options.transforms[transformName](sourcecode);
-                if (tmp) { sourcecode = tmp; }
+                const transformFn = options.transforms[transformName];
+                if (typeof transformFn === "function") {
+                    const tmp = transformFn.call(null, sourcecode, relative);
+                    if (typeof tmp === "string") { sourcecode = tmp; }
+                }
             }
         }
+        srcNode.setSourceContent(relative, sourcecode);
+
         const lines = Utils.getLines(sourcecode);
         lines.forEach((line, i) => {
             const linIdx = i + 1; // SourceNode uses 1 based line indexes
@@ -251,6 +258,15 @@ class FileInjector {
                 srcNode.add("\n");
         });
         return srcNode;
+    }
+    __removeSrcMapping(srccode) {
+        let tmp = srccode;
+        if (typeof tmp === "string" && tmp.length) {
+            logger.debug("removeSrcMapping...");
+            const srcMappingTag = /(\/[*/][@#])\s+(sourceMappingURL)\s*\=\s*((?:(?!\s+\*\/).)*).*[\n\r]/g;
+            tmp = tmp.replace(srcMappingTag, "");
+        }
+        return tmp;
     }
 }
 
@@ -330,7 +346,7 @@ class ExpressionMatcher {
                 }
             }
             return `${k}`;
-        }
+        };
         const parsed = {};
         split.forEach((prop, i) => {
             let key, val;
